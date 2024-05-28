@@ -1,7 +1,8 @@
 # research_writer
 
-A wysiwyg markdown editor with AI chat, so you never have to switch context while writing research-based content.
+A 'what you see is what you get' (WYSIWYG) markdown editor with integrated AI chat, designed to keep you focused and in context while crafting research-based content.
 
+<br>
 
 ## screenshots
 
@@ -9,4 +10,3 @@ A wysiwyg markdown editor with AI chat, so you never have to switch context whil
   <img src="assets/sample1.png" alt="Screenshot of research_writer" height="500">
   <img src="assets/sample2.png" alt="Screenshot of research_writer" height="500">
 </div>
-
