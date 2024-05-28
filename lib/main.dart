@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Text(
-            'google_generative_ai',
+            'what you see is what you get',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
