@@ -61,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+    model = GenerativeModel(
+        model: 'gemini-pro', apiKey: apiKey, safetySettings: []);
   }
 
   @override
@@ -80,19 +81,53 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     final content = [Content.text(prompt)];
-    final response = await model.generateContent(content);
 
-    setState(() {
-      chat.add(
-        Message(
-          sender: 'bot',
-          content: response.text ?? '',
-          timestamp: DateTime.now(),
-        ),
-      );
-      scrollToBottom();
-      waiting = false;
-    });
+    try {
+      final response = await model.generateContent(content);
+
+      setState(() {
+        chat.add(
+          Message(
+            sender: 'bot',
+            content: response.text ?? '',
+            timestamp: DateTime.now(),
+          ),
+        );
+        scrollToBottom();
+        waiting = false;
+      });
+    } on GenerativeAIException catch (e) {
+      // Handle the specific GenerativeAIException
+      print('GenerativeAIException: ${e.message}');
+
+      setState(() {
+        chat.add(
+          Message(
+            sender: 'bot',
+            content:
+                'Sorry, the generated content was blocked due to safety concerns.',
+            timestamp: DateTime.now(),
+          ),
+        );
+        scrollToBottom();
+        waiting = false;
+      });
+    } catch (e) {
+      // Handle any other exceptions
+      print('Unexpected error: $e');
+
+      setState(() {
+        chat.add(
+          Message(
+            sender: 'bot',
+            content: 'An unexpected error occurred. Please try again.',
+            timestamp: DateTime.now(),
+          ),
+        );
+        scrollToBottom();
+        waiting = false;
+      });
+    }
   }
 
   @override
